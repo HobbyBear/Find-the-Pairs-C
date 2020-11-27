@@ -4,7 +4,7 @@
 #include <conio.h>
 
 #define ELIMINATED 'X'
-#define UNASSIGNED 'U'
+#define START_CHAR 'A'
 #define KEY_UP 72
 #define KEY_DOWN 80
 #define KEY_LEFT 75
@@ -23,7 +23,11 @@ void pause(char *s){
 }
 
 map_element_t* generate_map(int size){
-    char candidtes[] = "!@#$ABCDEFG";
+    char candidtes[size];
+
+    for (int i=0; i<size; i++){
+        candidtes[i] = START_CHAR + i;
+    }
 
     map_element_t *map = (map_element_t *) malloc(sizeof(map_element_t) * size * size);
 
@@ -134,13 +138,14 @@ void main_game(int size){
     }
 
     pause("Winner!");
+    free(map);
 
 }
 
 
 int main(int argv, char *args[]){
 
-    int size = 4;
+    int size = 8;
 
     main_game(size);
 
