@@ -18,7 +18,7 @@ typedef struct {
 }map_element_t;
 
 void pause(char *s){
-    printf("%s Press any key to continue.", s);
+    printf("%s\nPress any key to continue.", s);
     getch();
 }
 
@@ -50,7 +50,7 @@ map_element_t* generate_map(int size){
     return map;
 }
 
-void print_map(map_element_t *map, int size, int pointer, map_element_t *selected){
+void print_map(map_element_t *map, int size, int pointer, map_element_t *selected, int moved){
     for (int row=0; row<size; row++){
         for (int col=0; col<size; col++){
             int index = row * size + col;
@@ -67,10 +67,11 @@ void print_map(map_element_t *map, int size, int pointer, map_element_t *selecte
         }
         printf("\n");
     }
+    printf("you have moved %d steps.\n", moved);
     printf("arrow keys: move the pointer\n");
     printf("*: current selected\n");
     printf("X: eliminated\n");
-    printf("q: return to main menu\n");
+    printf("q: quit\n");
 }
 
 void main_game(int size){
@@ -81,9 +82,10 @@ void main_game(int size){
     int const max_index = size * size - 1;
     int count = size * size;
     int pointer = 0;
+    int moved = 0;
     map_element_t *selected = NULL;
     map_element_t *map = generate_map(size);
-    print_map(map, size, pointer, selected);
+    print_map(map, size, pointer, selected, moved);
 
     while (1){
         switch(getch()) {
@@ -108,26 +110,26 @@ void main_game(int size){
                         /* eliminated */
                         map[pointer].element = ELIMINATED;
                         selected->element = ELIMINATED;
-                        count--;
+                        count -= 2;
                         selected = NULL;
                     }
-
                 }else{
                     if (map[pointer].element != ELIMINATED){
                         selected = &map[pointer];
                     }
-
                 }
-
+                /* enter does not count to movement */
+                moved--;
                 break;
             case 'q':
                 return;
         }
         system("cls");
+        moved++;
         if (count <= 0){
             break;
         }
-        print_map(map, size, pointer, selected);
+        print_map(map, size, pointer, selected, moved);
 
     }
 
@@ -136,7 +138,7 @@ void main_game(int size){
 }
 
 
-int main(){
+int main(int argv, char *args[]){
 
     int size = 4;
 
