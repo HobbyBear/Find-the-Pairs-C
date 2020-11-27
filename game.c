@@ -42,7 +42,7 @@ map_element_t* generate_map(int size){
         int index;
         while (1){
             index = rand() % (size * size/2);
-            if (paired[index] == 0){
+            if (!paired[index]){
                 paired[index] = 1;
                 break;
             }
@@ -100,10 +100,10 @@ void main_game(int size){
                 pointer = pointer > max_index-size ? pointer : pointer+size;
                 break;
             case KEY_RIGHT:
-                pointer = pointer < max_index  ? pointer+1 : pointer;
+                pointer = pointer < max_index ? pointer+1 : pointer;
                 break;
             case KEY_LEFT:
-                pointer = pointer > 0  ? pointer-1 : pointer;
+                pointer = pointer > 0 ? pointer-1 : pointer;
                 break;
             case KEY_ENTER:
                 if (selected){
