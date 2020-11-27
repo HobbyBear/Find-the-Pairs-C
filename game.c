@@ -50,7 +50,6 @@ map_element_t* generate_map(int size){
         map[i].element = map[index].element;
         map[i].index = i;
     }
-
     return map;
 }
 
@@ -134,9 +133,7 @@ void main_game(int size){
             break;
         }
         print_map(map, size, pointer, selected, moved);
-
     }
-
     pause("Winner!");
     free(map);
 
@@ -146,7 +143,6 @@ void main_game(int size){
 int main(int argv, char *args[]){
 
     int size = 8;
-
     main_game(size);
 
     return 0;
